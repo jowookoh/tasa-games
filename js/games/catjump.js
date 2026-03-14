@@ -63,6 +63,7 @@ export class CatJumpGame extends GameBase {
 
     this.boundJump = this.jump.bind(this);
     this.boundKeyDown = this.handleKeyDown.bind(this);
+    this.boundResize = null;
   }
 
   loadSprites() {
@@ -125,6 +126,10 @@ export class CatJumpGame extends GameBase {
     }
     this.canvas.removeEventListener('pointerdown', this.boundJump);
     document.removeEventListener('keydown', this.boundKeyDown);
+    if (this.boundResize) {
+      window.removeEventListener('resize', this.boundResize);
+      this.boundResize = null;
+    }
   }
 
   start() {
@@ -143,6 +148,10 @@ export class CatJumpGame extends GameBase {
     this.canvas.addEventListener('pointerdown', this.boundJump);
     document.addEventListener('keydown', this.boundKeyDown);
 
+    if (this.boundResize) window.removeEventListener('resize', this.boundResize);
+    this.boundResize = () => {};
+    window.addEventListener('resize', this.boundResize);
+
     this.running = true;
     this.gameOver = false;
     this.frame = 0;
@@ -153,17 +162,8 @@ export class CatJumpGame extends GameBase {
   }
 
   resizeCanvas() {
-    const rect = this.canvas.parentElement.getBoundingClientRect();
-    const maxW = Math.min(rect.width, 800);
-    const maxH = Math.min(window.innerHeight - 160, 600);
-    let w = maxW;
-    let h = w * 3 / 4;
-    if (h > maxH) {
-      h = maxH;
-      w = h * 4 / 3;
-    }
-    this.canvas.width = Math.round(w);
-    this.canvas.height = Math.round(h);
+    this.canvas.width = 800;
+    this.canvas.height = 600;
     this.groundY = this.canvas.height - GROUND_HEIGHT;
   }
 

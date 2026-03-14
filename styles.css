@@ -487,14 +487,15 @@ body {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  max-width: 800px;
+  width: 100%;
+  max-width: min(800px, calc((100vh - 10rem) * 4 / 3));
 }
 
 #catjump-canvas {
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 800px;
+  aspect-ratio: 4 / 3;
   touch-action: none;
   cursor: pointer;
 }
@@ -801,13 +802,52 @@ body {
     font-size: 1.1rem;
   }
 
+  .game-header {
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
   .stat-box {
-    padding: 0.8rem 1.5rem;
-    min-width: 100px;
+    padding: 0.6rem 1rem;
+    min-width: 80px;
+    border-radius: 12px;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
   }
 
   .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .catjump-canvas-wrap {
+    border-radius: 12px;
+  }
+
+  #catjump-canvas {
+    border-radius: 12px;
+  }
+
+  .catjump-overlay {
+    border-radius: 12px;
+  }
+
+  .overlay-title {
     font-size: 1.4rem;
+  }
+
+  .overlay-msg {
+    font-size: 0.95rem;
+  }
+
+  .overlay-content {
+    padding: 1.2rem;
+  }
+
+  .restart-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
   }
 
   .difficulty-buttons {
@@ -857,5 +897,44 @@ body {
 
   .memory-card-front::after, .memory-card-back {
     font-size: 4rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-header {
+    padding: 0.3rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .game-header {
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-box {
+    padding: 0.3rem 0.8rem;
+    min-width: 70px;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    margin-bottom: 0;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .catjump-canvas-wrap {
+    max-width: min(800px, calc((100vh - 5rem) * 4 / 3));
+  }
+
+  .restart-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0.3rem;
   }
 }
