@@ -1,4 +1,4 @@
-# 🎮 Tasa Games
+# 🎮 Taša Games
 
 A collection of fun, colorful games for kids! Designed for tablets with large, touch-friendly buttons and a playful interface.
 

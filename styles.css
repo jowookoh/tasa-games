@@ -323,6 +323,16 @@ body {
 .memory-card-back {
   background: var(--card-bg);
   transform: rotateY(180deg);
+  overflow: hidden;
+}
+
+.memory-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .memory-card.matched .memory-card-back {
@@ -469,6 +479,298 @@ body {
 
 .action-btn:active {
   transform: scale(0.98);
+}
+
+/* Cat Jump Game */
+.catjump-canvas-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+#catjump-canvas {
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 800px;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.catjump-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.overlay-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.overlay-title {
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.overlay-msg {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.overlay-btn {
+  font-family: inherit;
+}
+
+/* Sushi Maker Game */
+.sushi-game-area {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sushi-lives {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 4px;
+}
+
+.sushi-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sushi-order {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 0.8rem 1.2rem;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.order-name {
+  font-weight: 600;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.order-ingredients {
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.order-timer {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.order-timer-fill {
+  height: 100%;
+  background: var(--accent-green);
+  border-radius: 3px;
+  transition: width 0.2s linear;
+}
+
+.order-timer-fill.urgent {
+  background: #ff4444;
+  animation: timerPulse 0.5s ease infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.sushi-waiting {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+
+.sushi-plate-area {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sushi-plate-label {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.sushi-plate {
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+
+.plate-empty {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: normal;
+}
+
+.sushi-plate-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.sushi-plate-actions .action-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+}
+
+.sushi-ingredients {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+}
+
+.sushi-ing-btn {
+  background: var(--card-bg);
+  border: none;
+  border-radius: 16px;
+  padding: 0.8rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 4px 12px var(--card-shadow);
+}
+
+.sushi-ing-btn:hover, .sushi-ing-btn:active {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px var(--card-shadow);
+}
+
+.sushi-ing-btn:active {
+  transform: scale(0.95);
+}
+
+.ing-emoji {
+  font-size: 2rem;
+}
+
+.ing-name {
+  font-size: 0.75rem;
+  color: #718096;
+  font-weight: 500;
+}
+
+.sushi-gameover {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+.sushi-gameover h2 {
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.sushi-gameover p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.sushi-gameover .sushi-restart-btn {
+  margin-top: 1.5rem;
+}
+
+/* Pixel Coloring Game */
+.pixel-canvas-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.pixel-progress {
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.05em;
+}
+
+.pixel-canvas {
+  border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 1;
+  cursor: pointer;
+  image-rendering: pixelated;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.pixel-complete-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.pixel-complete-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.pixel-complete-content h2 {
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.pixel-complete-content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
 }
 
 @media (max-width: 480px) {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Tasa Games 🎮</title>
+  <title>Taša Games 🎮</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,35 +12,31 @@
 <body>
   <div id="app">
     <header class="app-header">
-      <button id="back-btn" class="back-btn hidden" aria-label="Go back">
+      <button id="back-btn" class="back-btn hidden" aria-label="Nazad">
         <span class="back-icon">←</span>
       </button>
-      <h1 class="logo">🎮 Tasa Games</h1>
+      <h1 class="logo">🎮 Taša Games</h1>
     </header>
 
     <main id="main-content">
       <section id="home-screen" class="screen active">
-        <h2 class="screen-title">Choose a Game!</h2>
+        <h2 class="screen-title">Izaberi igru!</h2>
         <div class="game-grid">
           <button class="game-card" data-game="memory">
             <span class="game-icon">🧠</span>
-            <span class="game-name">Memory Match</span>
-            <span class="game-desc">Find the pairs!</span>
+            <span class="game-name">Igra Memorije</span>
           </button>
-          <button class="game-card coming-soon" disabled>
-            <span class="game-icon">🔢</span>
-            <span class="game-name">Number Fun</span>
-            <span class="game-desc">Coming soon!</span>
+          <button class="game-card" data-game="catjump">
+            <span class="game-icon">🐱</span>
+            <span class="game-name">Lujka Pazi</span>
           </button>
-          <button class="game-card coming-soon" disabled>
+          <button class="game-card" data-game="sushi">
+            <span class="game-icon">🍣</span>
+            <span class="game-name">Suši Majstor</span>
+          </button>
+          <button class="game-card" data-game="pixel">
             <span class="game-icon">🎨</span>
-            <span class="game-name">Color Quest</span>
-            <span class="game-desc">Coming soon!</span>
-          </button>
-          <button class="game-card coming-soon" disabled>
-            <span class="game-icon">🔤</span>
-            <span class="game-name">Letter Land</span>
-            <span class="game-desc">Coming soon!</span>
+            <span class="game-name">Bojanka</span>
           </button>
         </div>
       </section>
@@ -48,32 +44,32 @@
       <section id="memory-game" class="screen game-screen">
         <div class="game-header">
           <div class="stat-box">
-            <span class="stat-label">Moves</span>
+            <span class="stat-label">Potezi</span>
             <span id="moves-count" class="stat-value">0</span>
           </div>
           <div class="stat-box">
-            <span class="stat-label">Pairs</span>
+            <span class="stat-label">Parovi</span>
             <span id="pairs-count" class="stat-value">0/8</span>
           </div>
         </div>
         
         <div class="difficulty-selector" id="difficulty-selector">
-          <h3>Pick Difficulty</h3>
+          <h3>Izaberi težinu</h3>
           <div class="difficulty-buttons">
             <button class="diff-btn" data-pairs="4">
               <span class="diff-icon">😊</span>
-              <span>Easy</span>
-              <span class="diff-detail">4 pairs</span>
+              <span>Lako</span>
+              <span class="diff-detail">4 para</span>
             </button>
             <button class="diff-btn" data-pairs="6">
               <span class="diff-icon">🤔</span>
-              <span>Medium</span>
-              <span class="diff-detail">6 pairs</span>
+              <span>Srednje</span>
+              <span class="diff-detail">6 parova</span>
             </button>
             <button class="diff-btn" data-pairs="8">
               <span class="diff-icon">🧐</span>
-              <span>Hard</span>
-              <span class="diff-detail">8 pairs</span>
+              <span>Teško</span>
+              <span class="diff-detail">8 parova</span>
             </button>
           </div>
         </div>
@@ -81,8 +77,57 @@
         <div id="memory-board" class="memory-board"></div>
         
         <button id="restart-btn" class="restart-btn hidden">
-          🔄 Play Again
+          🔄 Igraj ponovo
         </button>
+      </section>
+
+      <section id="catjump-game" class="screen game-screen">
+        <div class="game-header hidden">
+          <div class="stat-box">
+            <span class="stat-label">Kolačići</span>
+            <span id="catjump-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Rekord</span>
+            <span id="catjump-best" class="stat-value">0</span>
+          </div>
+        </div>
+
+        <div class="catjump-canvas-wrap">
+          <canvas id="catjump-canvas"></canvas>
+          <div id="catjump-overlay" class="catjump-overlay hidden">
+            <div class="overlay-content">
+              <h3 class="overlay-title">😿 Jao!</h3>
+              <p class="overlay-msg"></p>
+              <button class="overlay-btn action-btn primary">🔄 Pokušaj ponovo</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="catjump-restart" class="restart-btn hidden">
+          🔄 Igraj ponovo
+        </button>
+      </section>
+
+      <section id="sushi-game" class="screen game-screen">
+        <div class="game-header hidden">
+          <div class="stat-box">
+            <span class="stat-label">Porudžbine</span>
+            <span id="sushi-orders" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Rezultat</span>
+            <span id="sushi-score" class="stat-value">0</span>
+          </div>
+        </div>
+        <div class="sushi-game-area" id="sushi-game-area"></div>
+      </section>
+
+      <section id="pixel-game" class="screen game-screen">
+        <div class="pixel-canvas-wrap">
+          <div class="pixel-grid" id="pixel-grid"></div>
+          <div class="pixel-palette" id="pixel-palette"></div>
+        </div>
       </section>
 
       <div id="win-modal" class="modal hidden">
@@ -94,11 +139,11 @@
             <span class="confetti">✨</span>
             <span class="confetti">🌟</span>
           </div>
-          <h2 class="win-title">🏆 You Won! 🏆</h2>
-          <p class="win-stats">You found all pairs in <span id="final-moves">0</span> moves!</p>
+          <h2 class="win-title">🏆 Pobeda! 🏆</h2>
+          <p class="win-stats" id="win-stats-text">Pronašao si sve parove za <span id="final-moves">0</span> poteza!</p>
           <div class="win-buttons">
-            <button id="play-again-btn" class="action-btn primary">🔄 Play Again</button>
-            <button id="home-btn" class="action-btn secondary">🏠 Home</button>
+            <button id="play-again-btn" class="action-btn primary">🔄 Igraj ponovo</button>
+            <button id="home-btn" class="action-btn secondary">🏠 Početna</button>
           </div>
         </div>
       </div>

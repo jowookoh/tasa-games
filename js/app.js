@@ -1,4 +1,7 @@
 import { MemoryGame } from './games/memory.js';
+import { CatJumpGame } from './games/catjump.js';
+import { SushiGame } from './games/sushi.js';
+import { PixelGame } from './games/pixel.js';
 import { $ } from './utils.js';
 
 class App {
@@ -19,6 +22,9 @@ class App {
 
   init() {
     this.registerGame('memory', MemoryGame);
+    this.registerGame('catjump', CatJumpGame);
+    this.registerGame('sushi', SushiGame);
+    this.registerGame('pixel', PixelGame);
 
     document.querySelectorAll('.game-card[data-game]').forEach(card => {
       card.addEventListener('click', () => this.navigateToGame(card.dataset.game));
@@ -62,7 +68,12 @@ class App {
   }
 
   showWinModal(stats = {}) {
-    this.elements.finalMoves.textContent = stats.moves || 0;
+    const statsText = $('#win-stats-text');
+    if (stats.score !== undefined) {
+      statsText.innerHTML = `Sakupio si <span id="final-moves">${stats.score}</span> kolačića! Bravo! 🧁`;
+    } else {
+      statsText.innerHTML = `Pronašao si sve parove za <span id="final-moves">${stats.moves || 0}</span> poteza!`;
+    }
     this.elements.winModal.classList.remove('hidden');
   }
 

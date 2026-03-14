@@ -1,7 +1,17 @@
 import { GameBase } from '../game-base.js';
 import { shuffleArray, $ } from '../utils.js';
 
-const CARD_EMOJIS = ['🐶', '🐱', '🐼', '🦊', '🐸', '🐵', '🐰', '🐻', '🦁', '🐯', '🐮', '🐷'];
+const CARD_IMAGES = [
+  'images/warriors.jpg',
+  'images/damiano.jpg',
+  'images/lucius-barbie.jpg',
+  'images/gray-cat.jpg',
+  'images/dog-with-hat.jpg',
+  'images/johnny-depp.jpg',
+  'images/alice-wonderland.jpg',
+  'images/draco-malfoy.jpg',
+  'images/spirit-horse.jpg'
+];
 
 export class MemoryGame extends GameBase {
   constructor(app) {
@@ -48,12 +58,12 @@ export class MemoryGame extends GameBase {
     this.difficultySelector.classList.add('hidden');
     this.totalPairs = pairs;
 
-    const selectedEmojis = shuffleArray([...CARD_EMOJIS]).slice(0, pairs);
-    const cardPairs = shuffleArray([...selectedEmojis, ...selectedEmojis]);
+    const selectedImages = shuffleArray([...CARD_IMAGES]).slice(0, pairs);
+    const cardPairs = shuffleArray([...selectedImages, ...selectedImages]);
 
-    this.cards = cardPairs.map((emoji, index) => ({
+    this.cards = cardPairs.map((image, index) => ({
       id: index,
-      emoji,
+      image,
       isFlipped: false,
       isMatched: false
     }));
@@ -68,7 +78,7 @@ export class MemoryGame extends GameBase {
       <div class="memory-card" data-id="${card.id}">
         <div class="memory-card-inner">
           <div class="memory-card-front"></div>
-          <div class="memory-card-back">${card.emoji}</div>
+          <div class="memory-card-back"><img src="${card.image}" alt="card" draggable="false"></div>
         </div>
       </div>
     `).join('');
@@ -108,7 +118,7 @@ export class MemoryGame extends GameBase {
   checkForMatch() {
     const [card1, card2] = this.flippedCards;
 
-    if (card1.emoji === card2.emoji) {
+    if (card1.image === card2.image) {
       card1.isMatched = true;
       card2.isMatched = true;
       this.matchedPairs++;
