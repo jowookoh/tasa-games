@@ -13,8 +13,8 @@ const DOG_FRAMES = 4;
 const ANIM_SPEED = 24;
 
 const BASE_SPEED = 2.5;
-const SPAWN_MIN = 1200;
-const SPAWN_MAX = 2200;
+const SPAWN_MIN = 1800;
+const SPAWN_MAX = 3200;
 
 const COOKIE_SIZE = 24;
 const COOKIE_SPAWN_MIN = 800;
@@ -222,7 +222,7 @@ export class CatJumpGame extends GameBase {
 
   scheduleSpawn() {
     if (!this.running || this.gameOver) return;
-    const speedFactor = Math.max(0.4, 1 - this.score * 0.02);
+    const speedFactor = Math.max(0.5, 1 - this.score * 0.01);
     const delay = Math.random() * (SPAWN_MAX - SPAWN_MIN) * speedFactor + SPAWN_MIN * speedFactor;
     this.spawnTimeout = setTimeout(() => {
       this.spawnDog();
