@@ -52,6 +52,16 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.version-tag {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+}
+
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
