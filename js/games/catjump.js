@@ -222,7 +222,14 @@ export class CatJumpGame extends GameBase {
 
   scheduleSpawn() {
     if (!this.running || this.gameOver) return;
-    const speedFactor = Math.max(0.5, 1 - this.score * 0.01);
+    const crownThreshold = (TREAT_TIERS.length - 1) * 10;
+    let speedFactor;
+    if (this.score < crownThreshold) {
+      speedFactor = Math.max(0.5, 1 - this.score * 0.01);
+    } else {
+      const extra = this.score - crownThreshold;
+      speedFactor = Math.max(0.2, 0.5 - extra * 0.005);
+    }
     const delay = Math.random() * (SPAWN_MAX - SPAWN_MIN) * speedFactor + SPAWN_MIN * speedFactor;
     this.spawnTimeout = setTimeout(() => {
       this.spawnDog();
