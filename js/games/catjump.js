@@ -1,5 +1,5 @@
 import { GameBase } from '../game-base.js';
-import { $ } from '../utils.js';
+import { $, cacheBust } from '../utils.js';
 
 const GRAVITY = 0.55;
 const JUMP_FORCE = -12.5;
@@ -88,7 +88,7 @@ export class CatJumpGame extends GameBase {
     const load = (src) => {
       const img = new Image();
       img.onload = onLoad;
-      img.src = src;
+      img.src = cacheBust(src);
       return img;
     };
     this.sprites.catWalk = load('images/cat-walk.png');

@@ -1,5 +1,5 @@
 import { GameBase } from '../game-base.js';
-import { $ } from '../utils.js';
+import { $, shuffleArray, cacheBust } from '../utils.js';
 
 const PHOTO_TEMPLATES = [
   'images/photo-1.webp',
@@ -134,6 +134,7 @@ export class PixelGame extends GameBase {
       loaded: false,
     }));
     this.activeIdx = 0;
+    this.order = shuffleArray(PHOTO_TEMPLATES.map((_, i) => i));
     this.loadAllTemplates();
     this.updateProgress();
     this.drawCanvas();
@@ -151,10 +152,14 @@ export class PixelGame extends GameBase {
         this.templates[i].regions = regions;
         this.templates[i].revealed = new Uint8Array(regions.length);
         this.templates[i].loaded = true;
-        if (i === this.activeIdx) this.drawCanvas();
+        if (i === this.currentTplIdx) this.drawCanvas();
       };
-      img.src = src;
+      img.src = cacheBust(src);
     });
+  }
+
+  get currentTplIdx() {
+    return this.order[this.activeIdx];
   }
 
   updateProgress() {
@@ -190,7 +195,7 @@ export class PixelGame extends GameBase {
   }
 
   drawCanvas() {
-    const tpl = this.templates[this.activeIdx];
+    const tpl = this.templates[this.currentTplIdx];
     const imageData = this.ctx.createImageData(GRID_SIZE, GRID_SIZE);
     const d = imageData.data;
 
@@ -220,7 +225,7 @@ export class PixelGame extends GameBase {
 
   handleClick(e) {
     if (this.animating) return;
-    const tpl = this.templates[this.activeIdx];
+    const tpl = this.templates[this.currentTplIdx];
     if (!tpl.loaded) return;
 
     const rect = this.canvas.getBoundingClientRect();
@@ -239,7 +244,7 @@ export class PixelGame extends GameBase {
   }
 
   revealRegion(regionId) {
-    const tpl = this.templates[this.activeIdx];
+    const tpl = this.templates[this.currentTplIdx];
     const pixels = tpl.regions[regionId];
     if (!pixels || pixels.length === 0) return;
 
@@ -287,7 +292,7 @@ export class PixelGame extends GameBase {
   }
 
   autoRevealSmall() {
-    const tpl = this.templates[this.activeIdx];
+    const tpl = this.templates[this.currentTplIdx];
     const toAutoReveal = [];
 
     for (let r = 0; r < tpl.regions.length; r++) {
@@ -317,7 +322,7 @@ export class PixelGame extends GameBase {
   }
 
   checkCompletion() {
-    const tpl = this.templates[this.activeIdx];
+    const tpl = this.templates[this.currentTplIdx];
     for (let r = 0; r < tpl.regions.length; r++) {
       if (tpl.regions[r].length > 0 && !tpl.revealed[r]) return;
     }
@@ -328,20 +333,19 @@ export class PixelGame extends GameBase {
     const isLast = this.activeIdx >= PHOTO_TEMPLATES.length - 1;
 
     setTimeout(() => {
-      if (isLast) {
-        const overlay = document.createElement('div');
-        overlay.className = 'pixel-complete-overlay';
-        overlay.innerHTML = `
-          <div class="pixel-complete-content">
-            <h2>🎉 Bravo Tašo! 🎉</h2>
-            <button class="action-btn primary pixel-next-btn">👍 OK</button>
-          </div>
-        `;
-        wrap.appendChild(overlay);
-        overlay.querySelector('.pixel-next-btn').addEventListener('click', () => overlay.remove());
-      } else {
-        setTimeout(() => this.advanceToNext(), 1200);
-      }
+      const overlay = document.createElement('div');
+      overlay.className = 'pixel-complete-overlay';
+      overlay.innerHTML = `
+        <div class="pixel-complete-content">
+          <h2>🎉 Bravo Tašo! 🎉</h2>
+          <button class="action-btn primary pixel-next-btn">${isLast ? '👍 OK' : '➡️ Dalje'}</button>
+        </div>
+      `;
+      wrap.appendChild(overlay);
+      overlay.querySelector('.pixel-next-btn').addEventListener('click', () => {
+        overlay.remove();
+        if (!isLast) this.advanceToNext();
+      });
     }, 300);
   }
 

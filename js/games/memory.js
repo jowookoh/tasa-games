@@ -1,5 +1,5 @@
 import { GameBase } from '../game-base.js';
-import { shuffleArray, $ } from '../utils.js';
+import { shuffleArray, $, cacheBust } from '../utils.js';
 
 const CARD_IMAGES = [
   'images/warriors.jpg',
@@ -78,7 +78,7 @@ export class MemoryGame extends GameBase {
       <div class="memory-card" data-id="${card.id}">
         <div class="memory-card-inner">
           <div class="memory-card-front"></div>
-          <div class="memory-card-back"><img src="${card.image}" alt="card" draggable="false"></div>
+          <div class="memory-card-back"><img src="${cacheBust(card.image)}" alt="card" draggable="false"></div>
         </div>
       </div>
     `).join('');

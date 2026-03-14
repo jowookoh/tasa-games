@@ -1,3 +1,9 @@
+export const APP_VERSION = '2';
+
+export function cacheBust(url) {
+  return `${url}?v=${APP_VERSION}`;
+}
+
 export function shuffleArray(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
