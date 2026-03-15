@@ -1,4 +1,4 @@
-export const APP_VERSION = '6';
+export const APP_VERSION = '7';
 
 export function cacheBust(url) {
   return `${url}?v=${APP_VERSION}`;

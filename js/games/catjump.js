@@ -169,6 +169,8 @@ export class CatJumpGame extends GameBase {
 
   resetState() {
     this.score = 0;
+    this.tierIdx = 0;
+    this.tierCollected = 0;
     this.speed = BASE_SPEED;
     this.dogs = [];
     this.cookies = [];
@@ -222,13 +224,12 @@ export class CatJumpGame extends GameBase {
 
   scheduleSpawn() {
     if (!this.running || this.gameOver) return;
-    const crownThreshold = (TREAT_TIERS.length - 1) * 10;
+    const atMaxTier = this.tierIdx >= TREAT_TIERS.length - 1;
     let speedFactor;
-    if (this.score < crownThreshold) {
-      speedFactor = Math.max(0.5, 1 - this.score * 0.01);
+    if (!atMaxTier) {
+      speedFactor = Math.max(0.5, 1 - this.tierIdx * 0.1);
     } else {
-      const extra = this.score - crownThreshold;
-      speedFactor = Math.max(0.2, 0.5 - extra * 0.005);
+      speedFactor = Math.max(0.2, 0.5 - this.tierCollected * 0.01);
     }
     const delay = Math.random() * (SPAWN_MAX - SPAWN_MIN) * speedFactor + SPAWN_MIN * speedFactor;
     this.spawnTimeout = setTimeout(() => {
@@ -265,8 +266,7 @@ export class CatJumpGame extends GameBase {
     const minY = this.canvas.height * COOKIE_Y_MIN_RATIO;
     const maxY = this.groundY - COOKIE_SIZE;
     const y = Math.random() * (maxY - minY) + minY;
-    const tierIdx = Math.min(Math.floor(this.score / 10), TREAT_TIERS.length - 1);
-    const tier = TREAT_TIERS[tierIdx];
+    const tier = TREAT_TIERS[this.tierIdx];
     this.cookies.push({
       x: this.canvas.width + COOKIE_SIZE,
       y,
@@ -339,6 +339,11 @@ export class CatJumpGame extends GameBase {
       if (!c.collected && this.hitsCookie(cat, c)) {
         c.collected = true;
         this.score += c.points;
+        this.tierCollected++;
+        if (this.tierCollected >= 10 && this.tierIdx < TREAT_TIERS.length - 1) {
+          this.tierIdx++;
+          this.tierCollected = 0;
+        }
         this.scoreDisplay.textContent = this.score;
         const cx = c.x + c.size / 2;
         const cy = c.y + c.size / 2;
